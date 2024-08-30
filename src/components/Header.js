@@ -12,22 +12,25 @@ const Header = () => {
   };
 
   return (
-    <div className="w-full border-b-2 border-gray-300">
+    <div className="w-full md:border-b-2 md:border-gray-300">
       <div className="w-full md:w-10/12 flex flex-col items-start gap-y-4 md:flex-row md:justify-between md:items-center mx-auto md:p-5">
         <div
           className={
             isOpen
-              ? "flex flex-col md:hidden w-full p-2 "
-              : "w-full p-3 md:hidden"
+              ? "flex flex-col md:hidden w-full py-4 px-5"
+              : "w-full py-4 px-5 md:hidden"
           }
         >
           <div className="w-full flex justify-between items-center">
+            <Link to="/">
+              <img src={logo} alt="LOGO" className="w-16 md:w-20" />
+            </Link>
             <button
               onClick={toggleSideBar}
               className={
                 isOpen
                   ? "bg-black hover:bg-opacity-80 transition-all duration-200 text-white rounded-full h-6 w-6 flex items-center justify-center"
-                  : ""
+                  : "h-6 w-6"
               }
             >
               {isOpen ? (
@@ -36,25 +39,16 @@ const Header = () => {
                 <FontAwesomeIcon icon={faBars} />
               )}
             </button>
-            <Link to="/">
-              <img src={logo} alt="LOGO" className="w-16 md:w-20" />
-            </Link>
           </div>
           {isOpen && (
-            <ul className="flex flex-col gap-y-1 items-start w-full mt-2">
-              <li className="pl-2 text-sm border hover:bg-opacity-80 transition-all duration-200 border-black rounded-md w-full p-1 bg-black text-white">
-                Ride
-              </li>
-              <li className="pl-2 text-sm border hover:bg-opacity-80 transition-all duration-200 border-black rounded-md w-full p-1 bg-black text-white">
-                Drive
-              </li>
-              <li className="pl-2 text-sm border hover:bg-opacity-80 transition-all duration-200 border-black rounded-md w-full p-1 bg-black text-white">
-                About
-              </li>
-              <div className="pl-2 text-sm border hover:bg-opacity-80 transition-all duration-200 border-black rounded-md w-full p-1 bg-black text-white">
+            <ul className="flex flex-col gap-y-1 items-start w-full absolute mt-14 pr-4 bg-white">
+              <li className="font-semibold pl-2 py-2 text-2xl w-full">Ride</li>
+              <li className="font-semibold pl-2 py-2 text-2xl w-full">Drive</li>
+              <li className="font-semibold pl-2 py-2 text-2xl w-full">About</li>
+              <div className="font-semibold pl-2 py-2 text-2xl w-full">
                 Login
               </div>
-              <div className="pl-2 text-sm border hover:bg-opacity-80 transition-all duration-200 border-black rounded-md w-full p-1 bg-black text-white">
+              <div className="font-semibold pl-2 py-2 text-2xl w-full">
                 Signup
               </div>
             </ul>

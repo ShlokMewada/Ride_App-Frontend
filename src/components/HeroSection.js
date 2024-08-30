@@ -1,3 +1,6 @@
+import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const HeroSection = () => {
   return (
     <div className="w-10/12 mx-auto mt-10">
@@ -5,7 +8,7 @@ const HeroSection = () => {
         <div className="">
           <h1>Request a ride</h1>
           <div className="flex flex-col">
-            <i className="fa-solid fa-location-arrow"></i>
+            {/* <FontAwesomeIcon icon={faLocationArrow} /> */}
             <input type="text" />
             <input type="text" />
           </div>

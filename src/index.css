@@ -4,6 +4,18 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+.google-login-button {
+  width: 100% !important;
+}
+
+.google-login-button > div {
+  width: 100% !important;
+}
+
+.google-login-button > div > iframe {
+  width: 100% !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
