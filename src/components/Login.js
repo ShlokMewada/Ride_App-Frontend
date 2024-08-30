@@ -116,7 +116,7 @@ const Login = ({ isRider }) => {
           Sign In
         </button>
 
-        <div className="flex flex-col items-center gap-y-2">
+        <div className="flex flex-col items-center gap-y-2 w-full">
           <p className="text-sm font-medium text-gray-700">
             Sign In Using Google:
           </p>

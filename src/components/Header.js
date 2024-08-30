@@ -1,14 +1,41 @@
 import logo from "../assets/Cabify_Logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [onSignUpClick, setOnSignUpClick] = useState(false);
+  const [onSignInClick, setOnSignInClick] = useState(false);
+  const navigate = useNavigate();
+
+  const toggleSignUpClick = () => {
+    setOnSignUpClick(!onSignUpClick);
+  };
+
+  const toggleSignInClick = () => {
+    setOnSignInClick(!onSignInClick);
+  };
 
   const toggleSideBar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const navigateToSignInUser = () => {
+    navigate("/login");
+  };
+
+  const navigateToSignInRider = () => {
+    navigate("/rider/login");
+  };
+
+  const navigateToSignUpUser = () => {
+    navigate("/signup");
+  };
+
+  const navigateToSignUpRider = () => {
+    navigate("/rider/signup");
   };
 
   return (
@@ -65,12 +92,67 @@ const Header = () => {
           <li className="font-semibold text-lg">About</li>
         </ul>
         <div className="gap-x-2 hidden md:flex">
-          <button className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full">
-            Login
-          </button>
-          <button className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full">
-            Signup
-          </button>
+          {!onSignInClick && (
+            <button
+              className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
+              onClick={toggleSignInClick}
+            >
+              Login
+            </button>
+          )}
+          {onSignInClick && (
+            <div className="flex gap-x-2 items-center">
+              <button
+                onClick={toggleSignInClick}
+                className="bg-black hover:bg-opacity-80 transition-all duration-200 text-white rounded-full h-6 w-6 flex items-center justify-center"
+              >
+                <FontAwesomeIcon icon={faXmark} />
+              </button>
+              <button
+                className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
+                onClick={navigateToSignInUser}
+              >
+                Login as User
+              </button>
+              <button
+                className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
+                onClick={navigateToSignInRider}
+              >
+                Login as Rider
+              </button>
+            </div>
+          )}
+          {!onSignUpClick && (
+            <button
+              className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
+              onClick={toggleSignUpClick}
+            >
+              Signup
+            </button>
+          )}
+
+          {onSignUpClick && (
+            <div className="flex gap-x-2 items-center">
+              <button
+                className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
+                onClick={navigateToSignUpUser}
+              >
+                Signup as User
+              </button>
+              <button
+                className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
+                onClick={navigateToSignUpRider}
+              >
+                Signup as Rider
+              </button>
+              <button
+                onClick={toggleSignUpClick}
+                className="bg-black hover:bg-opacity-80 transition-all duration-200 text-white rounded-full h-6 w-6 flex items-center justify-center"
+              >
+                <FontAwesomeIcon icon={faXmark} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
