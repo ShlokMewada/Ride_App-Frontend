@@ -2,27 +2,18 @@ import { useDispatch, useSelector } from "react-redux";
 import MapBoxMap from "./MapBoxMap";
 import SearchLocation from "./SearchLocation";
 import {
-  setSourceMapboxId,
-  setDestinationMapboxId,
-  setPlot,
   setSourceCoordinates,
   setDestinationCoordinates,
-  setHamburgerOpen,
 } from "../redux/locationSlice";
 import { useEffect } from "react";
+import Header from "./Header";
+import RideOptions from "./RideOptions";
 
 const Booking = () => {
   const dispatch = useDispatch();
-  const {
-    authenticated,
-    sourceMapboxId,
-    destinationMapboxId,
-    plot,
-    sourceCoordinates,
-    destinationCoordinates,
-    distance,
-    coordinates,
-  } = useSelector((state) => state.location);
+  const { sourceMapboxId, destinationMapboxId, plot } = useSelector(
+    (state) => state.location
+  );
 
   const getCoordinates = async (id, set) => {
     const res = await fetch(`http://localhost:8000/getCoordinates/?id=${id}`);
@@ -47,12 +38,16 @@ const Booking = () => {
   // if (!authenticated) return <NotFound />;
   return (
     <div className="w-full bg-white min-h-screen py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-16">
+      <div className="top-0 left-0 right-0 -mt-12">
+        <Header />
+      </div>
+      <div className="w-11/12 flex mx-auto px-4 sm:px-6 lg:px-8 mt-16 gap-x-10">
+        <div className="flex flex-col gap-2">
           <SearchLocation />
-          <div className="w-full lg:w-2/3">
-            <MapBoxMap />
-          </div>
+          {plot && <RideOptions />}
+        </div>
+        <div className="w-full lg:w-2/3">
+          <MapBoxMap />
         </div>
       </div>
     </div>

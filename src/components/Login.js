@@ -3,7 +3,7 @@ import { checkValidDataSignIn } from "../utils/validate";
 import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { addUser, is_authenticated } from "../redux/userSlice";
+import { addUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -57,7 +57,6 @@ const Login = ({ isDriver }) => {
             password: password.current.value,
           })
         );
-        dispatch(is_authenticated(response.data.is_authenticated));
         toast.success("Successfully Logged In!");
         navigate("/");
       })

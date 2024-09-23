@@ -23,12 +23,8 @@ function SearchLocation() {
 
   const dispatch = useDispatch();
 
-  // const { setPlot } = useContext(plotOnMap);
-  // const { setSourceMapboxId } = useContext(sourceId);
-  // const { setDestinationMapboxId } = useContext(destinationId);
-
   const { lon, lat } = useSelector((store) => store.location.coordinates);
-  console.log("lon",lon,"lat",lat)
+  console.log("lon", lon, "lat", lat);
 
   const getSourceAddressList = async () => {
     if (source == "") {

@@ -7,7 +7,7 @@ import { setDistance } from "../redux/locationSlice";
 
 function MapBoxMap() {
   const dispatch = useDispatch();
-  const { coordinates, sourceCoordinates, destinationCoordinates, distance } =
+  const { coordinates, sourceCoordinates, destinationCoordinates } =
     useSelector((state) => state.location);
 
   const mapRef = useRef();

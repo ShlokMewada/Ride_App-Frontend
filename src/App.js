@@ -14,12 +14,6 @@ import { setCoordinates } from "./redux/locationSlice";
 const App = () => {
   const dispatch = useDispatch();
 
-  // const isAuthenticated = () => {
-  //   const isAuthenticate = JSON.parse(localStorage.getItem("is_authenticated"));
-  //   console.log(isAuthenticate);
-  //   dispatch(is_authenticated(isAuthenticate));
-  // };
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -63,11 +57,10 @@ const App = () => {
     });
   };
 
-  getUserLocation();
-
-  // useEffect(() => {
-  //   isAuthenticated();
-  // }, []);
+  useEffect(() => {
+    // isAuthenticated();
+    getUserLocation();
+  }, []);
 
   return (
     <div>

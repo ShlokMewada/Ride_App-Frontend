@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { is_authenticated } from "../redux/userSlice";
+import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 
 const Header = () => {
@@ -12,10 +11,9 @@ const Header = () => {
   const [onSignUpClick, setOnSignUpClick] = useState(false);
   const [onSignInClick, setOnSignInClick] = useState(false);
   const navigate = useNavigate();
-  const isAuthenticated = useSelector((store) => store.user.is_authenticated);
+  const checkAuthenticate = localStorage.getItem("is_authenticated");
+  const [isAuthenticated, setIsAuthenticated] = useState(checkAuthenticate);
   const dispatch = useDispatch();
-
-  console.log(isAuthenticated)
 
   const toggleSignUpClick = () => {
     setOnSignUpClick(!onSignUpClick);
@@ -50,9 +48,9 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    localStorage.setItem("is_authenticated", false);
-    dispatch(is_authenticated(false));
-    toast.success("Successfully Logged Out!")
+    localStorage.removeItem("is_authenticated");
+    setIsAuthenticated(null);
+    toast.success("Successfully Logged Out!");
   };
 
   return (
@@ -134,13 +132,13 @@ const Header = () => {
                   className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
                   onClick={navigateToSignInUser}
                 >
-                  Login as User
+                  Login as Rider
                 </button>
                 <button
                   className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
                   onClick={navigateToSignInRider}
                 >
-                  Login as Rider
+                  Login as Driver
                 </button>
               </div>
             )}
@@ -159,13 +157,13 @@ const Header = () => {
                   className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
                   onClick={navigateToSignUpUser}
                 >
-                  Signup as User
+                  Signup as Rider
                 </button>
                 <button
                   className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
                   onClick={navigateToSignUpRider}
                 >
-                  Signup as Rider
+                  Signup as Driver
                 </button>
                 <button
                   onClick={toggleSignUpClick}

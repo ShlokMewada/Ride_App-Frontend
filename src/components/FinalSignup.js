@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { addUser, is_authenticated } from "../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
@@ -39,8 +38,6 @@ const FinalSignup = ({ isDriver }) => {
           response.data.is_authenticated
         );
         console.log(response);
-        // dispatch(addUser());
-        dispatch(is_authenticated(response.data.is_authenticated));
         toast.success("Successfully Signed Up!");
         navigate("/");
       })
