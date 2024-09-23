@@ -3,11 +3,11 @@ import { checkValidDataSignIn } from "../utils/validate";
 import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { addUser } from "../redux/userSlice";
+import { addUser, is_authenticated } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
-const Login = ({ isRider }) => {
+const Login = ({ isDriver }) => {
   const email = useRef();
   const password = useRef();
   const [emailErrorMsg, setEmailErrorMsg] = useState();
@@ -22,7 +22,7 @@ const Login = ({ isRider }) => {
   };
 
   const navigateToSignUpRider = () => {
-    navigate("/rider/signup");
+    navigate("/driver/signup");
   };
 
   const handleSubmit = async () => {
@@ -46,10 +46,18 @@ const Login = ({ isRider }) => {
     await axios
       .post("http://localhost:8000/login/", formData)
       .then((response) => {
-        localStorage.setItem("accessToken", response.data.access);
-        localStorage.setItem("refreshToken", response.data.refresh);
-        console.log(response.data);
-        dispatch(addUser(response.data.is_Employee));
+        localStorage.setItem(
+          "is_authenticated",
+          response.data.is_authenticated
+        );
+        console.log(response);
+        dispatch(
+          addUser({
+            email: email.current.value,
+            password: password.current.value,
+          })
+        );
+        dispatch(is_authenticated(response.data.is_authenticated));
         toast.success("Successfully Logged In!");
         navigate("/");
       })
@@ -123,7 +131,7 @@ const Login = ({ isRider }) => {
           <GoogleAuth isSignIn={true} role={false} />
         </div>
 
-        {!isRider ? (
+        {!isDriver ? (
           <div className="flex justify-center gap-x-1 md:text-sm text-xs">
             <p className="text-gray-600">New to Servify?</p>
             <button

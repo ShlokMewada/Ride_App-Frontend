@@ -7,7 +7,7 @@ import { addUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
-const Signup = ({ isRider }) => {
+const Signup = ({ isDriver }) => {
   const email = useRef();
   const password = useRef();
   const [emailErrorMsg, setEmailErrorMsg] = useState();
@@ -22,7 +22,7 @@ const Signup = ({ isRider }) => {
   };
 
   const navigateToSignInRider = () => {
-    navigate("/rider/login");
+    navigate("/driver/login");
   };
 
   const handleSubmit = async () => {
@@ -42,16 +42,23 @@ const Signup = ({ isRider }) => {
     const formData = new FormData();
     formData.append("email", email.current.value);
     formData.append("password", password.current.value);
+    formData.append("user_type", isDriver ? "driver" : "rider");
 
     await axios
-      .post("http://localhost:8000/signup/", formData)
+      .post("http://localhost:8000/check-email/", {
+        email: email.current.value,
+      })
       .then((response) => {
-        localStorage.setItem("accessToken", response.data.access);
-        localStorage.setItem("refreshToken", response.data.refresh);
         console.log(response.data);
-        dispatch(addUser(response.data.is_Employee));
-        toast.success("Successfully Logged In!");
-        navigate("/");
+        dispatch(
+          addUser({
+            email: email.current.value,
+            password: password.current.value,
+            user_type: isDriver ? "driver" : "rider",
+          })
+        );
+        // toast.success("Successfully Signed Up!");
+        navigate("/finalsignup");
       })
       .catch((error) => {
         console.error(error);
@@ -123,7 +130,7 @@ const Signup = ({ isRider }) => {
           <GoogleAuth isSignIn={false} role={false} />
         </div>
 
-        {!isRider ? (
+        {!isDriver ? (
           <div className="flex justify-center gap-x-1 text-sm">
             <p className="text-gray-600">Already a user?</p>
             <button

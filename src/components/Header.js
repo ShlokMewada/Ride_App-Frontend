@@ -3,12 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { is_authenticated } from "../redux/userSlice";
+import toast from "react-hot-toast";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [onSignUpClick, setOnSignUpClick] = useState(false);
   const [onSignInClick, setOnSignInClick] = useState(false);
   const navigate = useNavigate();
+  const isAuthenticated = useSelector((store) => store.user.is_authenticated);
+  const dispatch = useDispatch();
+
+  console.log(isAuthenticated)
 
   const toggleSignUpClick = () => {
     setOnSignUpClick(!onSignUpClick);
@@ -27,7 +34,7 @@ const Header = () => {
   };
 
   const navigateToSignInRider = () => {
-    navigate("/rider/login");
+    navigate("/driver/login");
   };
 
   const navigateToSignUpUser = () => {
@@ -35,7 +42,17 @@ const Header = () => {
   };
 
   const navigateToSignUpRider = () => {
-    navigate("/rider/signup");
+    navigate("/driver/signup");
+  };
+
+  const navigateToBooking = () => {
+    navigate("/booking");
+  };
+
+  const handleLogout = () => {
+    localStorage.setItem("is_authenticated", false);
+    dispatch(is_authenticated(false));
+    toast.success("Successfully Logged Out!")
   };
 
   return (
@@ -68,8 +85,10 @@ const Header = () => {
             </button>
           </div>
           {isOpen && (
-            <ul className="flex flex-col gap-y-1 items-start w-full absolute mt-14 pr-4 bg-white">
-              <li className="font-semibold pl-2 py-2 text-2xl w-full">Ride</li>
+            <ul className="flex flex-col gap-y-1 items-start w-full mt-14 pr-4 bg-white">
+              <li className="font-semibold pl-2 py-2 text-2xl w-full">
+                <button onClick={navigateToBooking}>Ride</button>
+              </li>
               <li className="font-semibold pl-2 py-2 text-2xl w-full">Drive</li>
               <li className="font-semibold pl-2 py-2 text-2xl w-full">About</li>
               <div className="font-semibold pl-2 py-2 text-2xl w-full">
@@ -87,73 +106,84 @@ const Header = () => {
               <img src={logo} alt="LOGO" className="w-16 md:w-20" />
             </Link>
           </li>
-          <li className="font-semibold text-lg">Ride</li>
+          <li className="font-semibold text-lg cursor-pointer">
+            <button onClick={navigateToBooking}>Ride</button>
+          </li>
           <li className="font-semibold text-lg">Drive</li>
           <li className="font-semibold text-lg">About</li>
         </ul>
-        <div className="gap-x-2 hidden md:flex">
-          {!onSignInClick && (
-            <button
-              className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
-              onClick={toggleSignInClick}
-            >
-              Login
-            </button>
-          )}
-          {onSignInClick && (
-            <div className="flex gap-x-2 items-center">
+        {!isAuthenticated ? (
+          <div className="gap-x-2 hidden md:flex">
+            {!onSignInClick && (
               <button
+                className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
                 onClick={toggleSignInClick}
-                className="bg-black hover:bg-opacity-80 transition-all duration-200 text-white rounded-full h-6 w-6 flex items-center justify-center"
               >
-                <FontAwesomeIcon icon={faXmark} />
+                Login
               </button>
+            )}
+            {onSignInClick && (
+              <div className="flex gap-x-2 items-center">
+                <button
+                  onClick={toggleSignInClick}
+                  className="bg-black hover:bg-opacity-80 transition-all duration-200 text-white rounded-full h-6 w-6 flex items-center justify-center"
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
+                <button
+                  className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
+                  onClick={navigateToSignInUser}
+                >
+                  Login as User
+                </button>
+                <button
+                  className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
+                  onClick={navigateToSignInRider}
+                >
+                  Login as Rider
+                </button>
+              </div>
+            )}
+            {!onSignUpClick && (
               <button
                 className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
-                onClick={navigateToSignInUser}
-              >
-                Login as User
-              </button>
-              <button
-                className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
-                onClick={navigateToSignInRider}
-              >
-                Login as Rider
-              </button>
-            </div>
-          )}
-          {!onSignUpClick && (
-            <button
-              className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
-              onClick={toggleSignUpClick}
-            >
-              Signup
-            </button>
-          )}
-
-          {onSignUpClick && (
-            <div className="flex gap-x-2 items-center">
-              <button
-                className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
-                onClick={navigateToSignUpUser}
-              >
-                Signup as User
-              </button>
-              <button
-                className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
-                onClick={navigateToSignUpRider}
-              >
-                Signup as Rider
-              </button>
-              <button
                 onClick={toggleSignUpClick}
-                className="bg-black hover:bg-opacity-80 transition-all duration-200 text-white rounded-full h-6 w-6 flex items-center justify-center"
               >
-                <FontAwesomeIcon icon={faXmark} />
+                Signup
               </button>
-            </div>
-          )}
-        </div>
+            )}
+
+            {onSignUpClick && (
+              <div className="flex gap-x-2 items-center">
+                <button
+                  className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
+                  onClick={navigateToSignUpUser}
+                >
+                  Signup as User
+                </button>
+                <button
+                  className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
+                  onClick={navigateToSignUpRider}
+                >
+                  Signup as Rider
+                </button>
+                <button
+                  onClick={toggleSignUpClick}
+                  className="bg-black hover:bg-opacity-80 transition-all duration-200 text-white rounded-full h-6 w-6 flex items-center justify-center"
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <button
+            className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        )}
       </div>
     </div>
   );
