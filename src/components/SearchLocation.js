@@ -258,9 +258,9 @@ function SearchLocation() {
       <button
         className={`${
           sourceItem == null || destinationItem == null
-            ? "bg-[#000000A0]"
+            ? "bg-gray-700"
             : "bg-black"
-        } w-[22rem] text-white py-2 rounded-md ${
+        } w-[22rem] text-white py-2 rounded-full ${
           sourceItem != null && destinationItem != null
             ? ""
             : "cursor-not-allowed"

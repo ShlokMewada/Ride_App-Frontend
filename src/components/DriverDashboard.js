@@ -1,31 +1,28 @@
 import React, { useState } from "react";
-import {
-  Clock,
-  MapPin,
-  ChevronRight,
-  CheckCircle,
-  XCircle,
-  User,
-  DollarSign,
-} from "lucide-react";
+import { MapPin, ChevronRight, CheckCircle, XCircle, User } from "lucide-react";
 import MapBoxMap from "./MapBoxMap";
 import Header from "./Header";
 
 const DriverDashboard = () => {
   const [activeRideRequests, setActiveRideRequests] = useState([
-    { id: 1, user: "John Doe", pickup: "123 Main St", dropoff: "456 Elm St" },
+    {
+      id: 1,
+      user: "Teerth Patel",
+      pickup: "Iskon",
+      dropoff: "Shyamal",
+    },
     {
       id: 2,
-      user: "Jane Smith",
-      pickup: "789 Oak Ave",
-      dropoff: "321 Pine Rd",
+      user: "Manan Patel",
+      pickup: "Ramdevnagar",
+      dropoff: "Manek Chawk",
     },
   ]);
 
   const [drivingHistory, setDrivingHistory] = useState([
-    { id: 1, user: "Alice Johnson", date: "2024-09-15", earnings: "$25.50" },
-    { id: 2, user: "Bob Williams", date: "2024-09-14", earnings: "$18.75" },
-    { id: 3, user: "Carol Davis", date: "2024-09-13", earnings: "$32.00" },
+    { id: 1, user: "Pranay Shah", date: "2024-09-15", earnings: "₹100" },
+    { id: 2, user: "Kunj Panchal", date: "2024-09-14", earnings: "₹51" },
+    { id: 3, user: "Khush Trivedi", date: "2024-09-13", earnings: "₹89" },
   ]);
 
   const handleAccept = (id) => {
@@ -112,7 +109,6 @@ const DriverDashboard = () => {
                       </div>
                     </div>
                     <div className="flex items-center text-black font-medium">
-                      <DollarSign size={18} className="mr-1" />
                       {ride.earnings}
                     </div>
                   </div>
@@ -136,6 +132,5 @@ const DriverDashboard = () => {
 };
 
 export default DriverDashboard;
-
 
 // first,lastname , phone no(optional)

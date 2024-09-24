@@ -132,7 +132,7 @@ const RideOptions = () => {
                 Economy
               </span>
               <img
-                src="/images/Ecomomy.png"
+                src="/images/Economy.png"
                 className="h-16 w-full object-cover flex justify-center items-center"
                 alt="economy car"
               />
@@ -280,8 +280,8 @@ const RideOptions = () => {
 
             <button
               className={`${
-                active === 0 ? "bg-[#000000A0]" : "bg-black"
-              } w-[24rem] h-[2.75rem] text-lg text-white py-2 rounded-md ${
+                active === 0 ? "bg-gray-700" : "bg-black"
+              } w-[24rem] h-[2.75rem] text-lg text-white py-2 rounded-full ${
                 active === 0 ? "cursor-not-allowed" : ""
               }`}
               disabled={active === 0}
