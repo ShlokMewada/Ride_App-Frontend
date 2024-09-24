@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 const HeroSection = () => {
+  const isAuthenticated = localStorage.getItem("is_authenticated");
   return (
     <div className="w-full bg-white min-h-screen py-20 text-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,7 +20,9 @@ const HeroSection = () => {
               destination. Your ride, your way.
             </p>
             <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:bg-blue-500 transition-all duration-300">
-              <Link to="/booking">Book a Ride Now</Link>
+              <Link to={isAuthenticated ? "/booking" : "/login"}>
+                Book a Ride Now
+              </Link>
             </button>
           </div>
 

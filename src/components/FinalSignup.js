@@ -56,7 +56,7 @@ const FinalSignup = ({ isDriver }) => {
         }}
       >
         <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-6">
-          Sign Up
+          Register
         </h2>
 
         <div>

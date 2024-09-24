@@ -57,6 +57,7 @@ const Login = ({ isDriver }) => {
             password: password.current.value,
           })
         );
+        localStorage.setItem("user_type", isDriver ? "driver" : "rider");
         toast.success("Successfully Logged In!");
         navigate("/");
       })
@@ -142,7 +143,7 @@ const Login = ({ isDriver }) => {
           </div>
         ) : (
           <div className="flex justify-center gap-x-1 text-sm">
-            <p className="text-gray-600">New Rider?</p>
+            <p className="text-gray-600">New Driver?</p>
             <button
               className="font-medium text-gray-800 hover:text-gray-600"
               onClick={navigateToSignUpRider}

@@ -13,6 +13,7 @@ const Header = () => {
   const navigate = useNavigate();
   const checkAuthenticate = localStorage.getItem("is_authenticated");
   const [isAuthenticated, setIsAuthenticated] = useState(checkAuthenticate);
+  const userType = localStorage.getItem("user_type");
   const dispatch = useDispatch();
 
   const toggleSignUpClick = () => {
@@ -44,11 +45,24 @@ const Header = () => {
   };
 
   const navigateToBooking = () => {
-    navigate("/booking");
+    if (isAuthenticated) {
+      navigate("/booking");
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const navigateToDriverDashboard = () => {
+    if (isAuthenticated) {
+      navigate("/driverdashboard");
+    } else {
+      navigate("/driver/login");
+    }
   };
 
   const handleLogout = () => {
     localStorage.removeItem("is_authenticated");
+    localStorage.removeItem("user_type");
     setIsAuthenticated(null);
     toast.success("Successfully Logged Out!");
   };
@@ -104,10 +118,16 @@ const Header = () => {
               <img src={logo} alt="LOGO" className="w-16 md:w-20" />
             </Link>
           </li>
-          <li className="font-semibold text-lg cursor-pointer">
-            <button onClick={navigateToBooking}>Ride</button>
-          </li>
-          <li className="font-semibold text-lg">Drive</li>
+          {userType !== "driver" && (
+            <li className="font-semibold text-lg cursor-pointer">
+              <button onClick={navigateToBooking}>Ride</button>
+            </li>
+          )}
+          {userType !== "rider" && (
+            <li className="font-semibold text-lg">
+              <button onClick={navigateToDriverDashboard}>Drive</button>
+            </li>
+          )}
           <li className="font-semibold text-lg">About</li>
         </ul>
         {!isAuthenticated ? (

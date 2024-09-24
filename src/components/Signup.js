@@ -57,6 +57,7 @@ const Signup = ({ isDriver }) => {
             user_type: isDriver ? "driver" : "rider",
           })
         );
+        localStorage.setItem("user_type", isDriver ? "driver" : "rider");
         // toast.success("Successfully Signed Up!");
         navigate("/finalsignup");
       })
@@ -142,7 +143,7 @@ const Signup = ({ isDriver }) => {
           </div>
         ) : (
           <div className="flex justify-center gap-x-1 text-sm">
-            <p className="text-gray-600">Already a rider?</p>
+            <p className="text-gray-600">Already a driver?</p>
             <button
               className="font-medium text-gray-800 hover:text-gray-600"
               onClick={navigateToSignInRider}
