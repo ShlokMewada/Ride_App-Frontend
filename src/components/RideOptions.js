@@ -1,16 +1,28 @@
 import React, { useState, useEffect } from "react";
 // import { source, destination, plotOnMap } from "./context";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import { setRideBooked } from "../redux/userSlice";
 
 const RideOptions = () => {
-  let { distance, plot, sourceCoordinates, destinationCoordinates } =
-    useSelector((state) => state.location);
+  let {
+    distance,
+    plot,
+    sourceCoordinates,
+    destinationCoordinates,
+    sourcePlace,
+    destinationPlace,
+  } = useSelector((state) => state.location);
   distance = distance / 1000;
   const [active, setActive] = useState(0);
   const [selected, setSelected] = useState({});
   const [prices, setPrices] = useState([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  console.log(sourceCoordinates);
 
   const getPrizes = async () => {
     try {
@@ -27,6 +39,35 @@ const RideOptions = () => {
     getPrizes();
   }, []);
 
+  const cabBooking = async () => {
+    await axios
+      .post("http://localhost:8000/create-booking/", {
+        cab_type: selected.cab_type,
+        user_id: JSON.parse(localStorage.getItem("user_id")),
+        source: {
+          lat: sourceCoordinates?.latitude,
+          lon: sourceCoordinates?.longitude,
+          sourcePlace: sourcePlace,
+        },
+        destination: {
+          lat: destinationCoordinates?.latitude,
+          lon: destinationCoordinates?.longitude,
+          destinationPlace: destinationPlace,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        setTimeout(() => {
+          dispatch(setRideBooked(true));
+          navigate("/");
+        }, 2000);
+        toast.success("Cab Book, Cab coming in 10mins!");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       {distance !== -1 && prices.length !== 0 && plot ? (
@@ -39,10 +80,9 @@ const RideOptions = () => {
               onClick={() => {
                 setActive(1);
                 setSelected({
-                  name: "bike",
+                  cab_type: "byke",
                   destination: destinationCoordinates,
                   source: sourceCoordinates,
-                  price: prices[0].price * distance,
                 });
               }}
             >
@@ -80,7 +120,7 @@ const RideOptions = () => {
               onClick={() => {
                 setActive(2);
                 setSelected({
-                  name: "auto",
+                  cab_type: "auto",
                   destination: destinationCoordinates,
                   source: sourceCoordinates,
                   price: prices[1].price * distance,
@@ -121,7 +161,7 @@ const RideOptions = () => {
               onClick={() => {
                 setActive(3);
                 setSelected({
-                  name: "economy",
+                  cab_type: "economy",
                   destination: destinationCoordinates,
                   source: sourceCoordinates,
                   price: prices[2].price * distance,
@@ -162,7 +202,7 @@ const RideOptions = () => {
               onClick={() => {
                 setActive(4);
                 setSelected({
-                  name: "classic",
+                  cab_type: "classic",
                   destination: destinationCoordinates,
                   source: sourceCoordinates,
                   price: prices[3].price * distance,
@@ -203,7 +243,7 @@ const RideOptions = () => {
               onClick={() => {
                 setActive(5);
                 setSelected({
-                  name: "premium",
+                  cab_type: "premium",
                   destination: destinationCoordinates,
                   source: sourceCoordinates,
                   price: prices[4].price * distance,
@@ -244,7 +284,7 @@ const RideOptions = () => {
               onClick={() => {
                 setActive(6);
                 setSelected({
-                  name: "extra large",
+                  cab_type: "extra large",
                   destination: destinationCoordinates,
                   source: sourceCoordinates,
                   price: prices[5].price * distance,
@@ -285,9 +325,7 @@ const RideOptions = () => {
                 active === 0 ? "cursor-not-allowed" : ""
               }`}
               disabled={active === 0}
-              onClick={() => {
-                toast.success("Cab Booked!");
-              }}
+              onClick={cabBooking}
             >
               Book Ride
             </button>

@@ -3,7 +3,7 @@ import { checkValidDataSignIn } from "../utils/validate";
 import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { addUser } from "../redux/userSlice";
+import { addIsAuthenticated, addUser } from "../redux/userSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -46,11 +46,10 @@ const Login = ({ isDriver }) => {
     await axios
       .post("http://localhost:8000/login/", formData)
       .then((response) => {
-        localStorage.setItem(
-          "is_authenticated",
-          response.data.is_authenticated
-        );
+        localStorage.setItem("is_authenticated", true);
+        localStorage.setItem("user_id", response.data.user_id);
         console.log(response);
+        dispatch(addIsAuthenticated(true));
         dispatch(
           addUser({
             email: email.current.value,

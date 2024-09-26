@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { addIsAuthenticated } from "../redux/userSlice";
 
 const FinalSignup = ({ isDriver }) => {
   const formDataSignup = useSelector((store) => store.user.user);
@@ -35,8 +36,9 @@ const FinalSignup = ({ isDriver }) => {
       .then((response) => {
         localStorage.setItem(
           "is_authenticated",
-          response.data.is_authenticated
+          true
         );
+        dispatch(addIsAuthenticated(true));
         console.log(response);
         toast.success("Successfully Signed Up!");
         navigate("/");

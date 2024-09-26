@@ -5,10 +5,9 @@ import Map, { Marker, Source, Layer } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { setDistance } from "../redux/locationSlice";
 
-function MapBoxMap() {
+function MapBoxDriver({ sourceCoordinates, destinationCoordinates }) {
   const dispatch = useDispatch();
-  const { coordinates, sourceCoordinates, destinationCoordinates } =
-    useSelector((state) => state.location);
+  const { coordinates } = useSelector((state) => state.location);
 
   const mapRef = useRef();
   const [duration, setDuration] = useState(0);
@@ -140,4 +139,4 @@ function MapBoxMap() {
   );
 }
 
-export default MapBoxMap;
+export default MapBoxDriver;

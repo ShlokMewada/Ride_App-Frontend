@@ -8,12 +8,16 @@ import {
 import { useEffect } from "react";
 import Header from "./Header";
 import RideOptions from "./RideOptions";
+import Login from "./Login";
+import { useNavigate } from "react-router-dom";
 
 const Booking = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { sourceMapboxId, destinationMapboxId, plot } = useSelector(
     (state) => state.location
   );
+  const isAuthenticated = useSelector((store) => store.user.isAuthenticated);
 
   const getCoordinates = async (id, set) => {
     const res = await fetch(`http://localhost:8000/getCoordinates/?id=${id}`);
@@ -35,7 +39,7 @@ const Booking = () => {
     }
   }, [plot, sourceMapboxId, destinationMapboxId, dispatch]);
 
-  // if (!authenticated) return <NotFound />;
+  if (!isAuthenticated) return navigate("/login");
   return (
     <div className="w-full bg-white min-h-screen py-12">
       <div className="top-0 left-0 right-0 -mt-12">

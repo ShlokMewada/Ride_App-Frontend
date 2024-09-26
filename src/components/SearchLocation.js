@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addDestinationPlace,
+  addSourcePlace,
   setDestinationMapboxId,
   setPlot,
   setSourceMapboxId,
@@ -27,7 +29,7 @@ function SearchLocation() {
   console.log("lon", lon, "lat", lat);
 
   const getSourceAddressList = async () => {
-    if (source == "") {
+    if (source === "") {
       setSourceSuggest(false);
     } else if (sourceSuggest) {
       const res = await fetch(
@@ -39,7 +41,7 @@ function SearchLocation() {
   };
 
   const getDestinationAddressList = async () => {
-    if (destination == "") {
+    if (destination === "") {
       setDestinationSuggest(false);
     } else if (destinationSuggest) {
       const res = await fetch(
@@ -126,6 +128,9 @@ function SearchLocation() {
                   <div
                     onClick={() => {
                       setSource(item.name + ", " + item.full_address);
+                      dispatch(
+                        addSourcePlace(item.name + ", " + item.full_address)
+                      );
                       setSourceSuggest(false);
                       setSourceItem(item);
                       console.log("src", item.mapbox_id);
@@ -218,6 +223,11 @@ function SearchLocation() {
                   <div
                     onClick={() => {
                       setDestination(item.name + ", " + item.full_address);
+                      dispatch(
+                        addDestinationPlace(
+                          item.name + ", " + item.full_address
+                        )
+                      );
                       setDestinationSuggest(false);
                       setDestinationItem(item);
                       console.log("dest", item.mapbox_id);

@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Booking from "./components/Booking";
 import { useDispatch } from "react-redux";
-import { is_authenticated } from "./redux/userSlice";
+import { addIsAuthenticated } from "./redux/userSlice";
 import { useEffect } from "react";
 import DriverDashboard from "./components/DriverDashboard";
 import FinalSignup from "./components/FinalSignup";
@@ -57,8 +57,16 @@ const App = () => {
     });
   };
 
+  const getIsAuthenticated = () => {
+    const isAuthenticated = localStorage.getItem("is_authenticated");
+    console.log(isAuthenticated)
+    if (isAuthenticated !== undefined) {
+      dispatch(addIsAuthenticated(JSON.parse(isAuthenticated)));
+    }
+  };
+
   useEffect(() => {
-    // isAuthenticated();
+    getIsAuthenticated();
     getUserLocation();
   }, []);
 

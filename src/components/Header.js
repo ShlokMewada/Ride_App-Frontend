@@ -64,6 +64,7 @@ const Header = () => {
     localStorage.removeItem("is_authenticated");
     localStorage.removeItem("user_type");
     setIsAuthenticated(null);
+    navigate("/")
     toast.success("Successfully Logged Out!");
   };
 

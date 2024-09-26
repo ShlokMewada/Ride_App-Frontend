@@ -11,6 +11,8 @@ const locationSlice = createSlice({
     destinationCoordinates: null,
     plot: false,
     distance: -1,
+    sourcePlace: null,
+    destinationPlace: null,
   },
   reducers: {
     setCoordinates: (state, action) => {
@@ -34,6 +36,12 @@ const locationSlice = createSlice({
     setDistance: (state, action) => {
       state.distance = action.payload;
     },
+    addSourcePlace: (state, action) => {
+      state.sourcePlace = action.payload;
+    },
+    addDestinationPlace: (state, action) => {
+      state.destinationPlace = action.payload;
+    },
   },
 });
 
@@ -45,6 +53,8 @@ export const {
   setDestinationCoordinates,
   setPlot,
   setDistance,
+  addSourcePlace,
+  addDestinationPlace,
 } = locationSlice.actions;
 
 export default locationSlice.reducer;
