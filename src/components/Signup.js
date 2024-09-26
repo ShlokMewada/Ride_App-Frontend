@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { checkValidDataSignIn } from "../utils/validate";
-import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { addUser } from "../redux/userSlice";
@@ -57,12 +56,16 @@ const Signup = ({ isDriver }) => {
             user_type: isDriver ? "driver" : "rider",
           })
         );
-        localStorage.setItem("user_type", isDriver ? "driver" : "rider");
-        // toast.success("Successfully Signed Up!");
+        if (response.data.exists === true)
+          return toast.error(
+            isDriver ? "Driver already exists" : "User already exists"
+          );
+
         navigate("/finalsignup");
       })
       .catch((error) => {
         console.error(error);
+        console.log(error);
         toast.error("Invalid Email or Password!");
       });
   };
@@ -124,12 +127,12 @@ const Signup = ({ isDriver }) => {
           Sign Up
         </button>
 
-        <div className="flex flex-col items-center gap-y-2">
+        {/* <div className="flex flex-col items-center gap-y-2">
           <p className="text-sm font-medium text-gray-700">
             Sign Un Using Google:
           </p>
           <GoogleAuth isSignIn={false} role={false} />
-        </div>
+        </div> */}
 
         {!isDriver ? (
           <div className="flex justify-center gap-x-1 text-sm">

@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { checkValidDataSignIn } from "../utils/validate";
-import GoogleAuth from "./GoogleAuth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { addIsAuthenticated, addUser } from "../redux/userSlice";
@@ -56,9 +55,11 @@ const Login = ({ isDriver }) => {
             password: password.current.value,
           })
         );
-        localStorage.setItem("user_type", isDriver ? "driver" : "rider");
+        localStorage.setItem("user_type", response.data.type);
         toast.success("Successfully Logged In!");
-        navigate("/");
+        response.data.type === "driver"
+          ? navigate("/driverdashboard")
+          : navigate("/");
       })
       .catch((error) => {
         console.error(error);
@@ -123,12 +124,12 @@ const Login = ({ isDriver }) => {
           Sign In
         </button>
 
-        <div className="flex flex-col items-center gap-y-2 w-full">
+        {/* <div className="flex flex-col items-center gap-y-2 w-full">
           <p className="text-sm font-medium text-gray-700">
             Sign In Using Google:
           </p>
           <GoogleAuth isSignIn={true} role={false} />
-        </div>
+        </div> */}
 
         {!isDriver ? (
           <div className="flex justify-center gap-x-1 md:text-sm text-xs">

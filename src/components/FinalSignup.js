@@ -34,14 +34,15 @@ const FinalSignup = ({ isDriver }) => {
     await axios
       .post("http://localhost:8000/register/", formData)
       .then((response) => {
-        localStorage.setItem(
-          "is_authenticated",
-          true
-        );
+        localStorage.setItem("is_authenticated", true);
+        localStorage.setItem("user_id", response.data.user_id);
+        localStorage.setItem("user_type", response.data.type);
         dispatch(addIsAuthenticated(true));
         console.log(response);
         toast.success("Successfully Signed Up!");
-        navigate("/");
+        response.data.type === "driver"
+          ? navigate("/driverdashboard")
+          : navigate("/");
       })
       .catch((error) => {
         console.error(error);

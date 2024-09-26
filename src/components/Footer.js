@@ -7,13 +7,14 @@ import {
   faInstagram,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
   const navigate = useNavigate();
 
-  const navigateToBooking = () => {
-    navigate("/booking");
-  };
+  const isAuthenticated = useSelector((store) => store.user.isAuthenticated);
+
+  const userType = localStorage.getItem("user_type");
 
   return (
     <footer className="bg-gray-100 text-gray-600 py-12">
@@ -49,17 +50,20 @@ const Footer = () => {
               Products
             </h2>
             <ul className="space-y-2">
-              <li className="hover:text-gray-800 transition-colors duration-300">
-                <button onClick={navigateToBooking}>Ride</button>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="hover:text-gray-800 transition-colors duration-300"
-                >
-                  Drive
-                </a>
-              </li>
+              {userType !== "driver" && (
+                <li className="hover:text-gray-800 transition-colors duration-300">
+                  <Link to={isAuthenticated ? "/booking" : "/login"}>Ride</Link>
+                </li>
+              )}
+              {userType !== "rider" && (
+                <li className="hover:text-gray-800 transition-colors duration-300">
+                  <Link
+                    to={isAuthenticated ? "/driverdashboard" : "/driver/login"}
+                  >
+                    Drive
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
 

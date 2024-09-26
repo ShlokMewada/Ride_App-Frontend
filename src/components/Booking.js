@@ -10,6 +10,7 @@ import Header from "./Header";
 import RideOptions from "./RideOptions";
 import Login from "./Login";
 import { useNavigate } from "react-router-dom";
+import Footer from "./Footer";
 
 const Booking = () => {
   const navigate = useNavigate();
@@ -41,18 +42,23 @@ const Booking = () => {
 
   if (!isAuthenticated) return navigate("/login");
   return (
-    <div className="w-full bg-white min-h-screen py-12">
-      <div className="top-0 left-0 right-0 -mt-12">
-        <Header />
+    <div className="py-12">
+      <div className="w-full bg-white min-h-screen">
+        <div className="top-0 left-0 right-0 -mt-12">
+          <Header />
+        </div>
+        <div className="w-11/12 flex mx-auto px-4 sm:px-6 lg:px-8 mt-16 gap-x-10">
+          <div className="flex flex-col gap-2">
+            <SearchLocation />
+            {plot && <RideOptions />}
+          </div>
+          <div className="w-full lg:w-2/3">
+            <MapBoxMap />
+          </div>
+        </div>
       </div>
-      <div className="w-11/12 flex mx-auto px-4 sm:px-6 lg:px-8 mt-16 gap-x-10">
-        <div className="flex flex-col gap-2">
-          <SearchLocation />
-          {plot && <RideOptions />}
-        </div>
-        <div className="w-full lg:w-2/3">
-          <MapBoxMap />
-        </div>
+      <div className="relative bottom-0 -mb-12 pt-16">
+        <Footer />
       </div>
     </div>
   );

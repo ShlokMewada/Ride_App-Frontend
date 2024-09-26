@@ -4,6 +4,7 @@ import Header from "./Header";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import MapBoxDriver from "./MapBoxDriver";
+import Footer from "./Footer";
 
 const DriverDashboard = () => {
   const coordinates = useSelector((store) => store.location.coordinates);
@@ -189,6 +190,9 @@ const DriverDashboard = () => {
             />
           </div>
         </div>
+      </div>
+      <div className="mt-16 relative bottom-0">
+        <Footer />
       </div>
     </div>
   );

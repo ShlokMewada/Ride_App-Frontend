@@ -48,7 +48,7 @@ const HeroSection = () => {
               Experience unparalleled comfort and safety as you journey to your
               destination. Your ride, your way.
             </p>
-            {!rideBooked ? (
+            {!rideBooked && userType!=="driver" ? (
               <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:bg-blue-500 transition-all duration-300">
                 <Link to={isAuthenticated ? "/booking" : "/login"}>
                   Book a Ride Now

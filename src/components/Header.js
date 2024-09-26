@@ -28,22 +28,6 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
 
-  const navigateToSignInUser = () => {
-    navigate("/login");
-  };
-
-  const navigateToSignInRider = () => {
-    navigate("/driver/login");
-  };
-
-  const navigateToSignUpUser = () => {
-    navigate("/signup");
-  };
-
-  const navigateToSignUpRider = () => {
-    navigate("/driver/signup");
-  };
-
   const navigateToBooking = () => {
     if (isAuthenticated) {
       navigate("/booking");
@@ -64,7 +48,7 @@ const Header = () => {
     localStorage.removeItem("is_authenticated");
     localStorage.removeItem("user_type");
     setIsAuthenticated(null);
-    navigate("/")
+    navigate("/");
     toast.success("Successfully Logged Out!");
   };
 
@@ -149,17 +133,11 @@ const Header = () => {
                 >
                   <FontAwesomeIcon icon={faXmark} />
                 </button>
-                <button
-                  className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
-                  onClick={navigateToSignInUser}
-                >
-                  Login as Rider
+                <button className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full">
+                  <Link to="/login">Login as Rider</Link>
                 </button>
-                <button
-                  className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
-                  onClick={navigateToSignInRider}
-                >
-                  Login as Driver
+                <button className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full">
+                  <Link to="/driver/login">Login as Driver</Link>
                 </button>
               </div>
             )}
@@ -174,17 +152,11 @@ const Header = () => {
 
             {onSignUpClick && (
               <div className="flex gap-x-2 items-center">
-                <button
-                  className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
-                  onClick={navigateToSignUpUser}
-                >
-                  Signup as Rider
+                <button className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full">
+                  <Link to="/signup">Signup as Rider</Link>
                 </button>
-                <button
-                  className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full"
-                  onClick={navigateToSignUpRider}
-                >
-                  Signup as Driver
+                <button className="text-lg px-7 py-2 bg-black hover:bg-opacity-80 transition-all duration-100 text-white rounded-full">
+                  <Link to="/driver/signup">Signup as Driver</Link>
                 </button>
                 <button
                   onClick={toggleSignUpClick}
