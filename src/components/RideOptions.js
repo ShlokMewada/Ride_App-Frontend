@@ -59,7 +59,7 @@ const RideOptions = () => {
           dispatch(setRideBooked(true));
           navigate("/");
         }, 2000);
-        toast.success("Cab Book, Cab coming in 10mins!");
+        toast.success("Cab Booked, Cab coming in 10mins!");
       })
       .catch((error) => {
         console.log(error);
